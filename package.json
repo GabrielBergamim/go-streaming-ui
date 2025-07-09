@@ -26,8 +26,16 @@
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@videojs/http-streaming": "^3.17.0",
+    "hls.js": "^1.6.2",
+    "@primeuix/themes": "^1.2.1",
+    "primeng": "^20.0.0-rc.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "video.js": "^8.22.0",
+    "videojs-contrib-quality-levels": "^4.1.0",
+    "videojs-hls-quality-selector": "^2.0.0",
+    "videojs-http-source-selector": "^1.1.6",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

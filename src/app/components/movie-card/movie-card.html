@@ -1,0 +1,8 @@
+<div class="movie-card">
+  <img alt="{{ movie?.name }} poster" class="movie-poster">
+  <div class="movie-details">
+    <a [routerLink]="['/theater', movie?.id]" class="movie-link">
+      {{ movie?.name }}
+    </a>
+  </div>
+</div>

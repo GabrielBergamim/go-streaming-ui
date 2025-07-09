@@ -1,0 +1,7 @@
+<form (ngSubmit)="onFilterChange()">
+  <label for="filter">Filter:</label>
+
+  <input id="filter" type="text" [(ngModel)]="filter" name="filter"/>
+
+  <button type="submit">Search</button>
+</form>
