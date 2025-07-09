@@ -1,31 +1,28 @@
-# Stage 1: Build Angular app
+# Stage 1: build your Angular app
 FROM node:22-alpine AS builder
-
 WORKDIR /app
 
-# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm ci
 
-# Copy the rest of the code and build the app
 COPY . .
-RUN npm run build --prod
+RUN npm run build --prod   # produces /app/dist/go-streaming
 
-# Stage 2: Serve with NGINX
+# Stage 2: serve it with nginx
 FROM nginx:alpine
 
-# Remove default NGINX static assets
+# 1) Clear out the default nginx html dir
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy custom NGINX config (optional)
+# 2) Make sure our target folder exists
+RUN mkdir -p /usr/share/nginx/html/ui
+
+# 3) Drop in our custom config
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy built Angular app from builder stage
-COPY --from=builder /app/dist/go-streaming/* /usr/share/nginx/html/
+# 4) Copy *contents* of the dist folder into /usr/share/nginx/html/ui
+COPY --from=builder /app/dist/go-streaming/browser/* /usr/share/nginx/html/ui/
 
-# Expose port
 EXPOSE 80
-
-# Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
 
