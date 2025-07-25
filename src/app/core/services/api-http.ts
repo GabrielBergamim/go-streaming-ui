@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Movie } from "../models/movie";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Movie } from "../models/movie";
 export class ApiHttpService {
 
   private http: HttpClient = inject(HttpClient);
-  private baseUrl: string = 'http://go.streaming/api';
+  private baseUrl: string = environment.apiUrl;
 
   filter(name?:  string): Observable<Movie[]> {
     let headers = new HttpHeaders();
@@ -18,6 +19,6 @@ export class ApiHttpService {
     let params = new HttpParams();
     params = params.set('name', name || '');
 
-    return this.http.get<Movie[]>(`${this.baseUrl}/videos`, {params, headers});
+   return this.http.get<Movie[]>(`${this.baseUrl}/videos`, {params, headers});
   }
 }

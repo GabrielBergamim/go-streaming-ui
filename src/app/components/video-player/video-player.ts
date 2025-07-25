@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import videojs from 'video.js';
-import 'videojs-hls-quality-selector';
+import { environment } from '../../../environments/environment';
+import Hls from 'hls.js';
 
 @Component({
   selector: 'app-video-player',
@@ -15,54 +15,33 @@ export class VideoPlayerComponent implements AfterViewInit {
 
   player!: any;
 
-  private baseUrl = 'http://go.streaming/api/video';
+  hls!: Hls;
+
+  private baseUrl = `${environment.apiUrl}/video`;
 
   ngAfterViewInit() {
-    this.player = videojs(this.videoPlayer.nativeElement, {
-      controls: true,
-      fluid: true,
-      autoplay: false,
-      responsive: true,
-      controlBar: {
-        children: this.getControlBar()
-      },
-      sources: this.getVideoSource(),
-      tracks: this.getTracks()
-    });
+    const video = this.videoPlayer.nativeElement as HTMLVideoElement;
+
+    if (Hls.isSupported()) {
+      this.hls = new Hls({
+        enableWebVTT: true,
+        enableCEA708Captions: true,
+      });
+      this.hls.loadSource(`${this.baseUrl}/${this.videoId}/video.m3u8`);
+      this.hls.attachMedia(video);
+      this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch((error: any) => {
+          console.error('Error attempting to play:', error);
+        });
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = `${this.baseUrl}/${this.videoId}/video.m3u8`;
+      video.addEventListener('canplay', () => video.play());
+    }
   }
 
-  private getTracks() {
-    return [
-      {
-        kind: 'captions',
-        src: `${this.baseUrl}/${this.videoId}/pt-BR.vtt`,
-        srclang: 'pt-BR',
-        label: 'Portuguese',
-        default: true
-      }
-    ];
-  }
-
-  private getVideoSource() {
-    return [
-      {
-        src: `${this.baseUrl}/${this.videoId}/video.m3u8`,
-        type: 'application/x-mpegURL',
-      }
-    ];
-  }
-
-  private getControlBar(): string[] {
-    return [
-      'playToggle',
-      'volumePanel',
-      'currentTimeDisplay',
-      'timeDivider',
-      'durationDisplay',
-      'progressControl',
-      'subsCapsButton',
-      'fullscreenToggle',
-    ];
+  get subtitleUrl(): string {
+    return `${this.baseUrl}/${this.videoId}/pt-BR.vtt`;
   }
 }
 

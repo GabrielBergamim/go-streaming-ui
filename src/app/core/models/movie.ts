@@ -1,5 +1,6 @@
 export type Movie = {
-  id: number;
+  id: string;
   name: string;
+  wallpaper: string;
 };
 

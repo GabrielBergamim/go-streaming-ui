@@ -5,6 +5,7 @@ import { VideoPlayerComponent } from '../../components/video-player/video-player
 @Component({
   selector: 'app-theater',
   templateUrl: './theater.html',
+  styleUrl: './theater.scss',
   imports: [
     VideoPlayerComponent
   ],

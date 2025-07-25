@@ -6,7 +6,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build --prod   # produces /app/dist/go-streaming
+RUN npm run build -- -c production --base-href=/ui/ # produces /app/dist/go-streaming
 
 # Stage 2: serve it with nginx
 FROM nginx:alpine

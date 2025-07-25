@@ -2,8 +2,13 @@
   #videoPlayer
   id="videoPlayer"
   class="video-js vjs-default-skin"
+  style="width: 90%"
   controls
   crossorigin="anonymous"
-  preload="auto" >
+  type="application/x-mpegURL"
+  preload="auto">
+
+  <track kind="captions" [src]="subtitleUrl" srclang="pt-BR" label="Portuguese" default="true" />
+
 </video>
 

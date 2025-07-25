@@ -1,0 +1,12 @@
+.theater-mode {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  .video-container {
+    align-self: center;
+    padding: 35px;
+  }
+}
+
