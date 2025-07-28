@@ -1,7 +1,8 @@
 <form (ngSubmit)="onFilterChange()">
-  <label for="filter">Filter:</label>
+  <p-floatlabel variant="in">
+    <input pInputText id="filter" type="text" [(ngModel)]="filter" autocomplete="off" name="filter" />
+    <label for="filter">Filter</label>
+  </p-floatlabel>
 
-  <input id="filter" type="text" [(ngModel)]="filter" name="filter"/>
-
-  <button type="submit">Search</button>
+  <button pButton type="submit">Search</button>
 </form>
