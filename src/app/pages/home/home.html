@@ -3,3 +3,10 @@
 <app-filter (filterChange)="onFilterChange($event)" />
 
 <app-movie-list [movies]="movies$ | async" />
+
+<p-paginator
+  [(first)]="first"
+  [rows]="rows"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[2, 3, 4]"
+  (onPageChange)="onPageChange($event)" />

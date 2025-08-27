@@ -4,3 +4,10 @@ export type Movie = {
   wallpaper: string;
 };
 
+export type Page<T> = {
+  totalItems: number;
+  totalPages: number;
+  isLast: boolean;
+  content: T[];
+}
+
